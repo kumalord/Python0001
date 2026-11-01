@@ -4,6 +4,7 @@ pipeline {
     environment {
         VENV_DIR   = 'venv'
         DEPLOY_DIR = 'C:\\ws\\Python0001-main'
+        PYTHON_EXE = 'C:\\Users\\ruru\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe'
     }
 
     options {
@@ -18,14 +19,14 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/kumalord/Python0001'
             }
         }
 
         stage('Setup Python') {
             steps {
-                bat 'python --version'
-                bat 'python -m venv %VENV_DIR%'
+                bat '"%PYTHON_EXE%" --version'
+                bat '"%PYTHON_EXE%" -m venv %VENV_DIR%'
                 bat '%VENV_DIR%\\Scripts\\python -m pip install --upgrade pip'
                 bat '%VENV_DIR%\\Scripts\\pip install -r requirements.txt'
             }
@@ -56,7 +57,7 @@ pipeline {
                 bat 'if not exist "%DEPLOY_DIR%" mkdir "%DEPLOY_DIR%"'
                 bat 'copy /Y helloworld.py "%DEPLOY_DIR%\\"'
                 bat 'copy /Y profile.py "%DEPLOY_DIR%\\"'
-                bat 'python "%DEPLOY_DIR%\\helloworld.py"'
+                bat '"%PYTHON_EXE%" "%DEPLOY_DIR%\\helloworld.py"'
             }
         }
     }
