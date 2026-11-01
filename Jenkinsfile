@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         VENV_DIR   = 'venv'
-        DEPLOY_DIR = 'C:\\ws\\jenkins1\\deploy'
+        DEPLOY_DIR = 'C:\\ws\\Python0001-main'
     }
 
     options {
